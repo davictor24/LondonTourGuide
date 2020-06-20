@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.electroninc.londontourguide.R;
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu drawerMenu = navigationView.getMenu();
+        drawerMenu.add(0, 0, 0, "Place A");
+        drawerMenu.add(0, 1, 0, "Place B");
+        drawerMenu.add(0, 2, 0, "Place C");
+        drawerMenu.setGroupCheckable(0, true, true);
+        drawerMenu.getItem(0).setChecked(true);
+        navigationView.invalidate();
+
         setupFragments();
     }
 
@@ -86,11 +95,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        int fragmentInd = 0;
-        if (id == R.id.place_b) fragmentInd = 1;
-        else if (id == R.id.place_c) fragmentInd = 2;
-
-        switchFragment(fragmentInd);
+        switchFragment(id);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
