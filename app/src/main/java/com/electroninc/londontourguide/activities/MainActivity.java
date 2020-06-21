@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         placesViewModel.places = data;
         placesViewModel.hasLoaded = true;
         updateView();
+        LoaderManager.getInstance(this).destroyLoader(LOADER_ID);
     }
 
     @Override

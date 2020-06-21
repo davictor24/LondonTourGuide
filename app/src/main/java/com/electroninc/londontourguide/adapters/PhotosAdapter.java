@@ -45,7 +45,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosView
     }
 
     public interface ItemClickListener {
-        void onItemClicked(int itemId);
+        void onItemClicked(ImageView imageView, int itemId);
     }
 
     class PhotosViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -59,7 +59,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotosView
 
         @Override
         public void onClick(View view) {
-            itemClickListener.onItemClicked(getAdapterPosition());
+            itemClickListener.onItemClicked((ImageView) view, getAdapterPosition());
         }
 
         ImageView getPhoto() {

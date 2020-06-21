@@ -1,11 +1,12 @@
 package com.electroninc.londontourguide.fragments;
 
 import android.content.Intent;
-import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.electroninc.londontourguide.R;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,11 +82,22 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
     }
 
     @Override
-    public void onItemClicked(int itemId) {
+    public void onItemClicked(ImageView imageView, int itemId) {
         Intent viewPhotoIntent = new Intent(getActivity(), PhotoActivity.class);
         viewPhotoIntent.putExtra(PhotoActivity.PLACE_NAME, place.getName());
         viewPhotoIntent.putExtra(PhotoActivity.PHOTO_RESOURCE, place.getPhotos().get(itemId));
-        startActivity(viewPhotoIntent);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            imageView.setTransitionName(PhotoActivity.PHOTO_TRANSITION_NAME);
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    getActivity(),
+                    imageView,
+                    imageView.getTransitionName()
+            );
+            startActivity(viewPhotoIntent, optionsCompat.toBundle());
+        } else {
+            startActivity(viewPhotoIntent);
+        }
     }
 
     private void populateTextView(TextView textView, String text) {
