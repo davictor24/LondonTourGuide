@@ -63,4 +63,8 @@ public final class Utils {
         }
         return places;
     }
+
+    public static int getResourceFromDrawable(Context context, String drawableName) {
+        return context.getResources().getIdentifier("R.drawable." + drawableName, "drawable", context.getPackageName());
+    }
 }
