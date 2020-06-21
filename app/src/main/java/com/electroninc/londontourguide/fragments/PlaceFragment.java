@@ -1,5 +1,6 @@
 package com.electroninc.londontourguide.fragments;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickListener {
     private static final String PLACE_INDEX = "place_index";
@@ -64,6 +66,16 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         populateTextView(placeMapsTextView, placeMaps);
         populateTextView(placePhoneTextView, placePhone);
         populateTextView(placeWebsiteTextView, placeWebsite);
+
+        photosRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        PhotosAdapter adapter = new PhotosAdapter(getActivity(), photos, this);
+        photosRecyclerView.setAdapter(adapter);
     }
 
     @Override
