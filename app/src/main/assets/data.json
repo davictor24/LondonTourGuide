@@ -6,7 +6,13 @@
       "maps": "https://www.google.com/maps/place/Hyde+Park/@51.5072682,-0.167919,17z/data=!3m1!4b1!4m5!3m4!1s0x4876054929181a85:0xd1af6c4f49b4bd0c!8m2!3d51.5072682!4d-0.1657303",
       "phone": "+44 300 061 2000",
       "website": "https://www.royalparks.org.uk/parks/hyde-park",
-      "photos": []
+      "photos": [
+        "hyde_park_1",
+        "hyde_park_2",
+        "hyde_park_3",
+        "hyde_park_4",
+        "hyde_park_5"
+      ]
     },
     {
       "name": "Buckingham Palace",
@@ -14,7 +20,13 @@
       "maps": "https://www.google.com/maps/place/Buckingham+Palace/@51.501364,-0.1440787,17z/data=!3m1!4b1!4m5!3m4!1s0x48760520cd5b5eb5:0xa26abf514d902a7!8m2!3d51.501364!4d-0.14189",
       "phone": "+44 303 123 7300",
       "website": "https://www.rct.uk/visit/the-state-rooms-buckingham-palace",
-      "photos": []
+      "photos": [
+        "buckingham_palace_1",
+        "buckingham_palace_2",
+        "buckingham_palace_3",
+        "buckingham_palace_4",
+        "buckingham_palace_5"
+      ]
     },
     {
       "name": "Victoria and Albert Museum",
@@ -22,7 +34,13 @@
       "maps": "https://www.google.com/maps/place/Victoria+and+Albert+Museum/@51.4966392,-0.1743687,17z/data=!3m1!4b1!4m5!3m4!1s0x48760543b17e57c3:0x9eb7094dfdcd651f!8m2!3d51.4966392!4d-0.17218",
       "phone": "+44 20 7942 2000",
       "website": "https://www.vam.ac.uk",
-      "photos": []
+      "photos": [
+        "victoria_museum_1",
+        "victoria_museum_2",
+        "victoria_museum_3",
+        "victoria_museum_4",
+        "victoria_museum_5"
+      ]
     },
     {
       "name": "The British Museum",
@@ -30,7 +48,12 @@
       "maps": "https://www.google.com/maps/place/The+British+Museum/@51.5194133,-0.1291453,17z/data=!3m1!4b1!4m5!3m4!1s0x48761b323093d307:0x2fb199016d5642a7!8m2!3d51.5194133!4d-0.1269566",
       "phone": "+44 20 7323 8299",
       "website": "https://www.britishmuseum.org",
-      "photos": []
+      "photos": [
+        "british_museum_1",
+        "british_museum_2",
+        "british_museum_3",
+        "british_museum_4"
+      ]
     },
     {
       "name": "Harrods",
@@ -38,7 +61,13 @@
       "maps": "https://www.google.com/maps/place/Harrods/@51.4994055,-0.1654231,17z/data=!3m1!4b1!4m5!3m4!1s0x48760538ed2a30ff:0x15ee630d4b4e0d42!8m2!3d51.4994055!4d-0.1632344",
       "phone": "+44 20 7730 1234",
       "website": "https://www.harrods.com/en-gb",
-      "photos": []
+      "photos": [
+        "harrods_1",
+        "harrods_2",
+        "harrods_3",
+        "harrods_4",
+        "harrods_5"
+      ]
     },
     {
       "name": "Columbia Road Flower Market",
@@ -46,7 +75,11 @@
       "maps": "https://www.google.com/maps/place/Columbia+Road+Flower+Market/@51.529129,-0.0719977,17z/data=!3m1!4b1!4m5!3m4!1s0x48761cb35fc4ef51:0xdbbae99319852b53!8m2!3d51.529129!4d-0.069809",
       "phone": "",
       "website": "http://www.columbiaroad.info",
-      "photos": []
+      "photos": [
+        "columbia_road_1",
+        "columbia_road_2",
+        "columbia_road_3"
+      ]
     },
     {
       "name": "London Eye",
@@ -54,7 +87,9 @@
       "maps": "https://www.google.com/maps/place/lastminute.com+London+Eye/@51.503324,-0.1217317,17z/data=!3m1!4b1!4m5!3m4!1s0x487604b900d26973:0x4291f3172409ea92!8m2!3d51.503324!4d-0.119543",
       "phone": "+44 870 990 8881",
       "website": "https://www.londoneye.com",
-      "photos": []
+      "photos": [
+        "london_eye_1"
+      ]
     },
     {
       "name": "The Regent's Park",
@@ -62,7 +97,13 @@
       "maps": "https://www.google.com/maps/place/The+Regent's+Park/@51.5312705,-0.1591581,17z/data=!3m1!4b1!4m5!3m4!1s0x48761ac3b0b3be07:0x8983e0fbb6a18be!8m2!3d51.5312705!4d-0.1569694",
       "phone": "+44 300 061 2300",
       "website": "https://www.royalparks.org.uk/parks/the-regents-park",
-      "photos": []
+      "photos": [
+        "regents_park_1",
+        "regents_park_2",
+        "regents_park_3",
+        "regents_park_4",
+        "regents_park_5"
+      ]
     },
     {
       "name": "Big Ben",
@@ -70,7 +111,13 @@
       "maps": "https://www.google.com/maps/place/Big+Ben/@51.5007292,-0.1268141,17z/data=!3m1!4b1!4m5!3m4!1s0x487604c38c8cd1d9:0xb78f2474b9a45aa9!8m2!3d51.5007292!4d-0.1246254",
       "phone": "+44 20 7219 4272",
       "website": "https://www.parliament.uk/bigben",
-      "photos": []
+      "photos": [
+        "big_ben_1",
+        "big_ben_2",
+        "big_ben_3",
+        "big_ben_4",
+        "big_ben_5"
+      ]
     },
     {
       "name": "Tower of London",
@@ -78,7 +125,9 @@
       "maps": "https://www.google.com/maps/place/Tower+of+London/@51.5081124,-0.078138,17z/data=!3m1!4b1!4m5!3m4!1s0x48760349331f38dd:0xa8bf49dde1d56467!8m2!3d51.5081124!4d-0.0759493",
       "phone": "+44 844 482 7777",
       "website": "https://www.hrp.org.uk/tower-of-london",
-      "photos": []
+      "photos": [
+        "tower_of_london_1"
+      ]
     }
   ]
 }
