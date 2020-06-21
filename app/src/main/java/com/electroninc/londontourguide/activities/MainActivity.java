@@ -1,13 +1,13 @@
 package com.electroninc.londontourguide.activities;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.electroninc.londontourguide.R;
 import com.electroninc.londontourguide.fragments.PlaceFragment;
@@ -24,7 +24,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int LOADER_ID = 1;
 
-    private Toolbar toolbar;
+    private ActionBar actionBar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -47,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        actionBar = getSupportActionBar();
 
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,17 +60,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         placesViewModel = new ViewModelProvider(this).get(PlacesViewModel.class);
-        placesViewModel.places.observe(this, new Observer<List<Place>>() {
-            @Override
-            public void onChanged(List<Place> places) {
-                if (placesViewModel.hasLoaded) updateView(places);
-            }
-        });
-
         placesFragmentManager = getSupportFragmentManager();
 
         if (!placesViewModel.hasLoaded)
             LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this);
+        else updateView(placesViewModel.currentFragment);
     }
 
     @Override
@@ -96,39 +90,46 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Place>> loader, List<Place> data) {
-        Toast.makeText(this, "Loaded " + data.size() + " items!", Toast.LENGTH_SHORT).show();
-        placesViewModel.places.postValue(data);
+        placesViewModel.places = data;
         placesViewModel.hasLoaded = true;
+        updateView();
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<Place>> loader) {
     }
 
-    private void updateView(List<Place> places) {
+    private void updateView() {
+        updateView(0);
+    }
+
+    private void updateView(int fragmentIndex) {
         placeFragments = new ArrayList<>();
         Menu drawerMenu = navigationView.getMenu();
-        for (int i = 0; i < places.size(); i++) {
-            Place place = places.get(i);
+        for (int i = 0; i < placesViewModel.places.size(); i++) {
+            Place place = placesViewModel.places.get(i);
             drawerMenu.add(0, i, 0, place.getName());
             placeFragments.add(PlaceFragment.newInstance(i));
         }
 
         drawerMenu.setGroupCheckable(0, true, true);
-        drawerMenu.getItem(0).setChecked(true);
+        if (fragmentIndex < placesViewModel.places.size()) {
+            drawerMenu.getItem(fragmentIndex).setChecked(true);
+            switchFragment(fragmentIndex);
+        }
         navigationView.invalidate();
-        switchFragment(0);
     }
 
     private void switchFragment(int i) {
         PlaceFragment placeFragment = placeFragments.get(i);
-        Place place = placesViewModel.places.getValue().get(placeFragment.getPlaceIndex());
+        Place place = placesViewModel.places.get(placeFragment.getPlaceIndex());
         placesFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment,
                         placeFragment,
                         place.getTag())
                 .commit();
-        toolbar.setTitle(place.getName());
+        actionBar.setTitle(place.getName());
+        placesViewModel.currentFragment = i;
     }
 
 }

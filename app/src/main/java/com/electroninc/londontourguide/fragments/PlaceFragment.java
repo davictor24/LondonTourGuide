@@ -44,8 +44,7 @@ public class PlaceFragment extends Fragment {
         int placeIndex = getArguments().getInt(PLACE_INDEX);
         Place place = new ViewModelProvider(getActivity())
                 .get(PlacesViewModel.class)
-                .places.getValue()
-                .get(placeIndex);
+                .places.get(placeIndex);
 
         placeTextView.setText(place.getInfo());
     }
