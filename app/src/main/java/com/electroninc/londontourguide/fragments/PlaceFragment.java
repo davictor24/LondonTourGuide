@@ -1,6 +1,7 @@
 package com.electroninc.londontourguide.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -60,17 +61,48 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
                 .get(PlacesViewModel.class)
                 .places.get(getPlaceIndex());
         String placeInfo = place.getInfo();
-        String placeMaps = place.getMaps();
-        String placePhone = place.getPhone();
-        String placeWebsite = place.getWebsite();
+        final String placeMaps = place.getMaps();
+        final String placePhone = place.getPhone();
+        final String placeWebsite = place.getWebsite();
         List<String> photos = place.getPhotos();
 
-        populateTextView(placeInfoTextView, placeInfo);
-//        populateTextView(placeMapsTextView, placeMaps);
-//        populateTextView(placePhoneTextView, placePhone);
-//        populateTextView(placeWebsiteTextView, placeWebsite);
+        if (!shouldHide(placeInfoTextView, placeInfo)) {
+            placeInfoTextView.setText(placeInfo);
+        }
 
-        photosRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
+        if (!shouldHide(placeMapsTextView, placeMaps)) {
+            placeMapsTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadMap(placeMaps);
+                }
+            });
+        }
+
+        if (!shouldHide(placePhoneTextView, placePhone)) {
+            placePhoneTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialNumber(placePhone);
+                }
+            });
+        }
+
+        if (!shouldHide(placeWebsiteTextView, placeWebsite)) {
+            placeWebsiteTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    visitWebsite(placeWebsite);
+                }
+            });
+        }
+
+        int spanCount;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            spanCount = 2;
+        else spanCount = 3;
+
+        photosRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(spanCount,
                 StaggeredGridLayoutManager.VERTICAL) {
             @Override
             public boolean canScrollVertically() {
@@ -100,9 +132,22 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         }
     }
 
-    private void populateTextView(TextView textView, String text) {
-        if (text == null || text.isEmpty()) textView.setVisibility(View.GONE);
-        else textView.setText(text);
+    private boolean shouldHide(View view, String text) {
+        boolean shouldHide = text == null || text.isEmpty();
+        if (shouldHide) view.setVisibility(View.GONE);
+        return shouldHide;
+    }
+
+    private void loadMap(String url) {
+
+    }
+
+    private void dialNumber(String number) {
+
+    }
+
+    private void visitWebsite(String url) {
+
     }
 
     public int getPlaceIndex() {
