@@ -111,22 +111,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (int i = 0; i < places.size(); i++) {
             Place place = places.get(i);
             drawerMenu.add(0, i, 0, place.getName());
-            placeFragments.add(new PlaceFragment(place));
+            placeFragments.add(PlaceFragment.newInstance(i));
         }
 
-        switchFragment(0);
         drawerMenu.setGroupCheckable(0, true, true);
         drawerMenu.getItem(0).setChecked(true);
         navigationView.invalidate();
+        switchFragment(0);
     }
 
     private void switchFragment(int i) {
+        PlaceFragment placeFragment = placeFragments.get(i);
+        Place place = placesViewModel.places.getValue().get(placeFragment.getPlaceIndex());
         placesFragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment,
-                        placeFragments.get(i),
-                        placeFragments.get(i).getPlace().getTag())
+                        placeFragment,
+                        place.getTag())
                 .commit();
-        toolbar.setTitle(placeFragments.get(i).getPlace().getName());
+        toolbar.setTitle(place.getName());
     }
 
 }
