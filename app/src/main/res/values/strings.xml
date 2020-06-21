@@ -14,4 +14,11 @@
     <string name="home_second">Home Second</string>
     <string name="places">Places</string>
     <string name="photo_item">Photo item</string>
+    <string name="photos">Photos</string>
+    <string name="click_to_enlarge">(click to enlarge)</string>
+    <string name="details">Details</string>
+    <string name="explore">Explore</string>
+    <string name="call">Call</string>
+    <string name="visit_website">Visit website</string>
+    <string name="find">Find</string>
 </resources>

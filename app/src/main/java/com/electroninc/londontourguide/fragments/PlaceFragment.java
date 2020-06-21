@@ -66,9 +66,9 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         List<String> photos = place.getPhotos();
 
         populateTextView(placeInfoTextView, placeInfo);
-        populateTextView(placeMapsTextView, placeMaps);
-        populateTextView(placePhoneTextView, placePhone);
-        populateTextView(placeWebsiteTextView, placeWebsite);
+//        populateTextView(placeMapsTextView, placeMaps);
+//        populateTextView(placePhoneTextView, placePhone);
+//        populateTextView(placeWebsiteTextView, placeWebsite);
 
         photosRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL) {

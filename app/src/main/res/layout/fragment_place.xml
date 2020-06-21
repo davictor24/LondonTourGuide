@@ -11,6 +11,14 @@
         android:padding="16dp">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="8dp"
+            android:text="@string/details"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/place_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,28 +27,67 @@
             tools:text="Hyde Park is one of the largest parks in Central London, and one of the Royal Parks of London." />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="8dp"
+            android:text="@string/explore"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/place_maps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/location"
+            android:drawableLeft="@drawable/location"
+            android:drawablePadding="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:text="@string/find"
             android:textSize="16sp"
-            tools:text="Maps URL goes here" />
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/place_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/call"
+            android:drawableLeft="@drawable/call"
+            android:drawablePadding="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:text="@string/call"
             android:textSize="16sp"
-            tools:text="+44 300 061 2000" />
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:id="@+id/place_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
+            android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/internet"
+            android:drawableLeft="@drawable/internet"
+            android:drawablePadding="8dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="4dp"
+            android:text="@string/visit_website"
             android:textSize="16sp"
-            tools:text="https://www.royalparks.org.uk/parks/hyde-park" />
+            tools:ignore="UnusedAttribute" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/photos"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="8dp"
+            android:text="@string/click_to_enlarge" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/place_photos"
