@@ -1,7 +1,10 @@
 package com.electroninc.londontourguide.fragments;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electroninc.londontourguide.R;
 import com.electroninc.londontourguide.activities.PhotoActivity;
@@ -21,6 +25,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,6 +33,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickListener {
     private static final String PLACE_INDEX = "place_index";
+    private static final int CALL_PERMISSION_REQUEST_ID = 1;
+    private static final String CALL_PERMISSION_NUMBER = "call_permission_number";
     private Place place;
 
     public PlaceFragment() {
@@ -66,20 +73,20 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         final String placeWebsite = place.getWebsite();
         List<String> photos = place.getPhotos();
 
-        if (!shouldHide(placeInfoTextView, placeInfo)) {
+        if (shouldShow(placeInfoTextView, placeInfo)) {
             placeInfoTextView.setText(placeInfo);
         }
 
-        if (!shouldHide(placeMapsTextView, placeMaps)) {
+        if (shouldShow(placeMapsTextView, placeMaps)) {
             placeMapsTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    loadMap(placeMaps);
+                    openUrl(placeMaps);
                 }
             });
         }
 
-        if (!shouldHide(placePhoneTextView, placePhone)) {
+        if (shouldShow(placePhoneTextView, placePhone)) {
             placePhoneTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,11 +95,11 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
             });
         }
 
-        if (!shouldHide(placeWebsiteTextView, placeWebsite)) {
+        if (shouldShow(placeWebsiteTextView, placeWebsite)) {
             placeWebsiteTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    visitWebsite(placeWebsite);
+                    openUrl(placeWebsite);
                 }
             });
         }
@@ -114,6 +121,22 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == CALL_PERMISSION_REQUEST_ID) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                String number = getArguments().getString(CALL_PERMISSION_NUMBER);
+                Uri uri = Uri.parse("tel:" + number);
+                intent.setData(uri);
+                startActivity(intent);
+            } else showPermissionDeniedToast();
+        }
+    }
+
+    @Override
     public void onItemClicked(ImageView imageView, int itemId) {
         Intent viewPhotoIntent = new Intent(getActivity(), PhotoActivity.class);
         viewPhotoIntent.putExtra(PhotoActivity.PLACE_NAME, place.getName());
@@ -132,22 +155,41 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         }
     }
 
-    private boolean shouldHide(View view, String text) {
+    private boolean shouldShow(View view, String text) {
         boolean shouldHide = text == null || text.isEmpty();
         if (shouldHide) view.setVisibility(View.GONE);
-        return shouldHide;
-    }
-
-    private void loadMap(String url) {
-
+        return !shouldHide;
     }
 
     private void dialNumber(String number) {
-
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse("tel:" + number));
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Bundle args = new Bundle();
+            args.putString(CALL_PERMISSION_NUMBER, number);
+            this.setArguments(args);
+            requestPermissions(new String[]{Manifest.permission.CALL_PHONE},
+                    CALL_PERMISSION_REQUEST_ID);
+        } else {
+            try {
+                startActivity(intent);
+            } catch (SecurityException e) {
+                showPermissionDeniedToast();
+                e.printStackTrace();
+            }
+        }
     }
 
-    private void visitWebsite(String url) {
+    private void openUrl(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+    }
 
+    private void showPermissionDeniedToast() {
+        Toast.makeText(getContext(), "Permission denied!", Toast.LENGTH_SHORT).show();
     }
 
     public int getPlaceIndex() {
