@@ -5,17 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.electroninc.londontourguide.R;
+import com.electroninc.londontourguide.adapters.PhotosAdapter;
 import com.electroninc.londontourguide.lifecycle.PlacesViewModel;
 import com.electroninc.londontourguide.models.Place;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class PlaceFragment extends Fragment {
+public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickListener {
     private static final String PLACE_INDEX = "place_index";
 
     public PlaceFragment() {
@@ -39,14 +44,36 @@ public class PlaceFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        TextView placeTextView = view.findViewById(R.id.place_text_view);
+        TextView placeInfoTextView = view.findViewById(R.id.place_info);
+        TextView placeMapsTextView = view.findViewById(R.id.place_maps);
+        TextView placePhoneTextView = view.findViewById(R.id.place_phone);
+        TextView placeWebsiteTextView = view.findViewById(R.id.place_website);
+        RecyclerView photosRecyclerView = view.findViewById(R.id.place_photos);
 
         int placeIndex = getArguments().getInt(PLACE_INDEX);
         Place place = new ViewModelProvider(getActivity())
                 .get(PlacesViewModel.class)
                 .places.get(placeIndex);
+        String placeInfo = place.getInfo();
+        String placeMaps = place.getMaps();
+        String placePhone = place.getPhone();
+        String placeWebsite = place.getWebsite();
+        List<String> photos = place.getPhotos();
 
-        placeTextView.setText(place.getInfo());
+        populateTextView(placeInfoTextView, placeInfo);
+        populateTextView(placeMapsTextView, placeMaps);
+        populateTextView(placePhoneTextView, placePhone);
+        populateTextView(placeWebsiteTextView, placeWebsite);
+    }
+
+    @Override
+    public void onItemClicked(int itemId) {
+        Toast.makeText(getActivity(), "Item clicked: " + itemId, Toast.LENGTH_SHORT).show();
+    }
+
+    private void populateTextView(TextView textView, String text) {
+        if (text == null || text.isEmpty()) textView.setVisibility(View.GONE);
+        else textView.setText(text);
     }
 
     public int getPlaceIndex() {
