@@ -1,14 +1,15 @@
 package com.electroninc.londontourguide.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.electroninc.londontourguide.R;
+import com.electroninc.londontourguide.activities.PhotoActivity;
 import com.electroninc.londontourguide.adapters.PhotosAdapter;
 import com.electroninc.londontourguide.lifecycle.PlacesViewModel;
 import com.electroninc.londontourguide.models.Place;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickListener {
     private static final String PLACE_INDEX = "place_index";
+    private Place place;
 
     public PlaceFragment() {
         // Required empty public constructor
@@ -52,10 +54,9 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
         TextView placeWebsiteTextView = view.findViewById(R.id.place_website);
         RecyclerView photosRecyclerView = view.findViewById(R.id.place_photos);
 
-        int placeIndex = getArguments().getInt(PLACE_INDEX);
-        Place place = new ViewModelProvider(getActivity())
+        place = new ViewModelProvider(getActivity())
                 .get(PlacesViewModel.class)
-                .places.get(placeIndex);
+                .places.get(getPlaceIndex());
         String placeInfo = place.getInfo();
         String placeMaps = place.getMaps();
         String placePhone = place.getPhone();
@@ -80,7 +81,10 @@ public class PlaceFragment extends Fragment implements PhotosAdapter.ItemClickLi
 
     @Override
     public void onItemClicked(int itemId) {
-        Toast.makeText(getActivity(), "Item clicked: " + itemId, Toast.LENGTH_SHORT).show();
+        Intent viewPhotoIntent = new Intent(getActivity(), PhotoActivity.class);
+        viewPhotoIntent.putExtra(PhotoActivity.PLACE_NAME, place.getName());
+        viewPhotoIntent.putExtra(PhotoActivity.PHOTO_RESOURCE, place.getPhotos().get(itemId));
+        startActivity(viewPhotoIntent);
     }
 
     private void populateTextView(TextView textView, String text) {
